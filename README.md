@@ -44,7 +44,10 @@ Graviton Database in short is  "ZFS for key-value stores".
 1. [Lines of Code](#lines-of-Code) 
 1. [TODO](#todo) 
 1. [Comparison with other databases](#comparison-with-other-databases) (Mysql, Postgres, LevelDB, RocksDB, LMDB, Bolt etc.)
+1. [License](#license) 
 
+
+GNU General Public License v3.0
 
 ## Getting Started
 ### Installing
@@ -278,3 +281,7 @@ In-addition LMDB heavily focuses on raw performance while BoltDB focus on simpli
 
 
 In-addition LMDB, BoltDB doesn't support versioning, snapshots, linear diffing etc. features only Graviton provides such features for now.
+
+
+### License 
+[GNU General Public License v3.0](https://github.com/deroproject/graviton/blob/master/LICENSE)
