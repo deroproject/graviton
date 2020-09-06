@@ -4,6 +4,7 @@
 Graviton Database is simple, fast, versioned, authenticated, embeddable key-value store database in pure GOLANG.  
 Graviton Database in short is like "ZFS for key-value stores" in which every write is tracked, versioned and authenticated with cryptograhic proofs. Additionally it is possible to take snapshots of database. Also it is possible to use simple copy,rsync commands for database backup even during live updates without any possibilities of database corruption.
 
+![Graviton: ZFS for key-value stores](images/GRAVITON.png?raw=true "Graviton: ZFS for key-value stores")
 
 ## Project Status
 Graviton is currently alpha software. Almost full unit test coverage and randomized black box testing are used to ensure database consistency and thread safety. The project already has 100% code coverage. A number of decisions such as change,rename APIs, handling errors, hashing algorithms etc. are being evaluated and open for improvements and suggestions.
