@@ -127,10 +127,6 @@ func (in *inner) insert(store *Store, n *leaf) error {
 		case *inner: // if its inner node, recursively insert  the node
 			return tmp.Insert(store, n)
 		case *leaf: // below case inserts or overwrites existing value, which dropping chains  of long length
-			if (tmp.keyhash[0] == n.keyhash[0] && tmp.keyhash == n.keyhash) || in.bit == lastBit { // if its last node, we are overwriting data, so do it, old versions will be accessible using old roots
-				return tmp.Put(store, n.keyhash, n.value)
-			}
-
 			// TODO, since the leaf is already stored, we just need the new inner nodes and thus change only the pointer
 			// above optimization will be worthy enough for the slight complexity it creates
 			// but it is todo
@@ -138,6 +134,9 @@ func (in *inner) insert(store *Store, n *leaf) error {
 				if err := tmp.loadfullleaffromstore(store); err != nil {
 					return err
 				}
+			}
+            if (tmp.keyhash[0] == n.keyhash[0] && tmp.keyhash == n.keyhash) || in.bit == lastBit { // if its last node, we are overwriting data, so do it, old versions will be accessible using old roots
+				return tmp.Put(store, n.keyhash, n.value)
 			}
 
 			in.right = newInner(in.bit + 1) //  otherwise we have enough slack, insert the node, by creating new inner node,
@@ -150,14 +149,13 @@ func (in *inner) insert(store *Store, n *leaf) error {
 	case *inner: // if its inner node, recursively insert  the node
 		return tmp.Insert(store, n)
 	case *leaf: // below case inserts or overwrites existing value, which dropping chains  of long length
-		if (tmp.keyhash[0] == n.keyhash[0] && tmp.keyhash == n.keyhash) || in.bit == lastBit { // if its last node, we are overwriting data, so do it, old versions will be accessible using old roots
-			return tmp.Put(store, n.keyhash, n.value)
-		}
-
 		if tmp.loaded_partial { // if leaf is loaded partially, load it fully now
 			if err := tmp.loadfullleaffromstore(store); err != nil {
 				return err
 			}
+		}
+        if (tmp.keyhash[0] == n.keyhash[0] && tmp.keyhash == n.keyhash) || in.bit == lastBit { // if its last node, we are overwriting data, so do it, old versions will be accessible using old roots
+			return tmp.Put(store, n.keyhash, n.value)
 		}
 		in.left = newInner(in.bit + 1) //  otherwise we have enough slack, insert the node
 		return in.left.(*inner).Insert(store, tmp, n)
